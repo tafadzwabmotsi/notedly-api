@@ -1,7 +1,7 @@
 {
   "extends": ["eslint:recommended", "prettier"],
   "parserOptions": {
-    "ecmaVersion": 13,
+    "ecmaVersion": 22,
     "sourceType": "module"
   },
   "env": {

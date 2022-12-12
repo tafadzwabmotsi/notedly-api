@@ -2,12 +2,13 @@ import mongoose from 'mongoose';
 
 export const db = {
   connect: DB_HOST => {
-    mongoose.set('strictQuery', true);  
-
     /**
      * Connect to the DB
      */
-    mongoose.connect(DB_HOST);
+    mongoose.connect(DB_HOST, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
 
     /**
      * Log an error if we fail to connect

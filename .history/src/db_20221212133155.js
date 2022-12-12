@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 
 export const db = {
   connect: DB_HOST => {
-    mongoose.set('strictQuery', true);  
-
     /**
      * Connect to the DB
      */

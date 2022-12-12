@@ -1,9 +1,9 @@
-import {} from 'dotenv/config';
+require('dotenv').config();
 
-import express from 'express';
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
-import db from './db.js';
+const express = require('express');
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
+const db = require('./db');
 
 /**
  * Run the server on a port specified in our .env file or port 4000

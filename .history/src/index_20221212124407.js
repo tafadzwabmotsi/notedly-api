@@ -3,7 +3,7 @@ import {} from 'dotenv/config';
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import db from './db.js';
+import { db } from './db.js';
 
 /**
  * Run the server on a port specified in our .env file or port 4000

@@ -2,7 +2,25 @@ import mongoose from 'mongoose';
 
 export const db = {
   connect: DB_HOST => {
-    mongoose.set('strictQuery', true);  
+    /**
+     * User the Mongo driver's updated URL string parser
+     */
+    mongoose.set('useNewUrlParser', true);
+
+    /**
+     * Use findOneAndUpdate in place of findAndModify
+     */
+    mongoose.set('useFindAndModify', false);
+
+    /**
+     * Use createIndex() in place of ensureIndex()
+     */
+    mongoose.set('useCreateIndex', true);
+
+    /**
+     * Use the new server discovery and monitoring engine
+     */
+    mongoose.set('useUnifiedTopology', true);
 
     /**
      * Connect to the DB
