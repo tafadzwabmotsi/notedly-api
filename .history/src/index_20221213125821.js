@@ -4,7 +4,7 @@ import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { db } from './db.js';
-import { models } from './models/index.js';
+import { models } from './models';
 
 /**
  * Run the server on a port specified in our .env file or port 4000
@@ -50,14 +50,20 @@ const resolvers = {
   Query: {
     hello: () => 'Hello World!',
     notes: async () => await models.Note.find(),
-    note: async (parent, args) => await models.Note.findById(args.id)
+    note: (parent, args) => {
+      return notes.find(note => note.id === args.id);
+    }
   },
   Mutation: {
-    newNote: async (parent, args) => {
-      return await models.Note.create({
+    newNote: (parent, args) => {
+      let noteValue = {
+        id: String(notes.length + 1),
         content: args.content,
         author: `Adam Scott`
-      });
+      };
+
+      notes.push(noteValue);
+      return noteValue;
     }
   }
 };

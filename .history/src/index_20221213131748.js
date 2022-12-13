@@ -50,7 +50,9 @@ const resolvers = {
   Query: {
     hello: () => 'Hello World!',
     notes: async () => await models.Note.find(),
-    note: async (parent, args) => await models.Note.findById(args.id)
+    note: (parent, args) => {
+      return notes.find(note => note.id === args.id);
+    }
   },
   Mutation: {
     newNote: async (parent, args) => {
