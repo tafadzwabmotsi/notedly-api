@@ -46,7 +46,6 @@ const getUser = token => {
  * Apollo Server setup
  */
 const server = new ApolloServer({
-  introspection: true,
   typeDefs,
   resolvers
 });
@@ -56,20 +55,7 @@ const server = new ApolloServer({
  */
 
 const { url } = await startStandaloneServer(server, {
-  context: async ({
-    req: {
-      headers: { authorization: token }
-    }
-  }) => {
-    /**
-     * Try to retrieve the a user with the token
-     */
-    const user = getUser(token);
-
-    console.log(user);
-
-    return { models, user };
-  }
+  context: () => ({ models })
 });
 
 console.log(`Server ready at ${url}`);

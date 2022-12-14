@@ -2,9 +2,9 @@
 /* https://gravatar.com/site/implement/ */
 import md5 from 'md5';
 
-export const gravatar = email => {
+const gravatar = email => {
   const hash = md5(email);
   return `https://www.gravatar.com/avatar/${hash}.jpg?d=identicon`;
 };
 
-export default gravatar;
+module.exports = gravatar;

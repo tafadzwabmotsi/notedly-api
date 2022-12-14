@@ -78,56 +78,8 @@ export const Mutation = {
       return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     } catch (err) {
       console.log(err);
+
       throw new Error('Error creating user account');
     }
-  },
-
-  /**
-   * Sign in the user
-   */
-  signIn: async (
-    parent,
-    { username, email, password },
-    { models: { User } }
-  ) => {
-    if (email) {
-      /**
-       * Normalize email address
-       */
-      email = email.trim().toLowerCase();
-    }
-
-    /**
-     * Find the user the given username and email
-     */
-    const user = await User.findOne({ $or: [{ email }, { username }] });
-
-    /**
-     * If no user is found throw an authentication error
-     */
-    if (!user) {
-      throw new GraphQLError('Error signing in', {
-        extensions: {
-          code: 'UNAUTHENTICATED'
-        }
-      });
-    }
-
-    /**
-     * If passwords don't match, throw an authentication error
-     */
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      throw new GraphQLError('Error signing in', {
-        extensions: {
-          code: 'UNAUTHENTICATED'
-        }
-      });
-    }
-
-    /**
-     * Create and return the json web token
-     */
-    return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   }
 };

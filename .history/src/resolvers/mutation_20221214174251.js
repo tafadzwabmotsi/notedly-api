@@ -124,10 +124,5 @@ export const Mutation = {
         }
       });
     }
-
-    /**
-     * Create and return the json web token
-     */
-    return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   }
 };

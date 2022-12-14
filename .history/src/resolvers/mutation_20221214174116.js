@@ -112,22 +112,5 @@ export const Mutation = {
         }
       });
     }
-
-    /**
-     * If passwords don't match, throw an authentication error
-     */
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      throw new GraphQLError('Error signing in', {
-        extensions: {
-          code: 'UNAUTHENTICATED'
-        }
-      });
-    }
-
-    /**
-     * Create and return the json web token
-     */
-    return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   }
 };

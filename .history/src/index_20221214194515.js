@@ -24,29 +24,9 @@ const DB_HOST = process.env.DB_HOST;
 db.connect(DB_HOST);
 
 /**
- * Get the user info from a JWT
- */
-const getUser = token => {
-  if (token) {
-    try {
-      /**
-       * Return the user information from the token
-       */
-      return jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-      /**
-       * If there's a problem with the token, throw an error
-       */
-      throw new Error('Session invalid');
-    }
-  }
-};
-
-/**
  * Apollo Server setup
  */
 const server = new ApolloServer({
-  introspection: true,
   typeDefs,
   resolvers
 });
@@ -56,20 +36,7 @@ const server = new ApolloServer({
  */
 
 const { url } = await startStandaloneServer(server, {
-  context: async ({
-    req: {
-      headers: { authorization: token }
-    }
-  }) => {
-    /**
-     * Try to retrieve the a user with the token
-     */
-    const user = getUser(token);
-
-    console.log(user);
-
-    return { models, user };
-  }
+  context: () => ({ models })
 });
 
 console.log(`Server ready at ${url}`);

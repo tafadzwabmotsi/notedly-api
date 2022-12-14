@@ -46,7 +46,6 @@ const getUser = token => {
  * Apollo Server setup
  */
 const server = new ApolloServer({
-  introspection: true,
   typeDefs,
   resolvers
 });
@@ -56,7 +55,7 @@ const server = new ApolloServer({
  */
 
 const { url } = await startStandaloneServer(server, {
-  context: async ({
+  context: ({
     req: {
       headers: { authorization: token }
     }
