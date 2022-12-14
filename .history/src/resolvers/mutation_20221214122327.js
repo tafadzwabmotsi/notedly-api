@@ -1,7 +1,7 @@
 import { models } from '../models/index.js';
 
 export const Mutation = {
-  newNote: async (parent, args) => {
+  newNote: async (parent, args, { models }) => {
     return await models.Note.create({
       content: args.content,
       author: `Adam Scott`
@@ -14,12 +14,5 @@ export const Mutation = {
     } catch (err) {
       return false;
     }
-  },
-  updateNote: async (parent, { content, id }) => {
-    return await models.Note.findOneAndUpdate(
-      { _id: id },
-      { $set: { content } },
-      { new: true }
-    );
   }
 };

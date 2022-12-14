@@ -2,14 +2,10 @@
  * Construct a schema, using GraphQL schema language
  */
 export const typeDefs = `#graphql
- scalar DateTime
-
  type Note {
   id: ID!
   content: String!
   author: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
  }
 
  type Query {

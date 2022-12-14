@@ -14,12 +14,5 @@ export const Mutation = {
     } catch (err) {
       return false;
     }
-  },
-  updateNote: async (parent, { content, id }) => {
-    return await models.Note.findOneAndUpdate(
-      { _id: id },
-      { $set: { content } },
-      { new: true }
-    );
   }
 };
