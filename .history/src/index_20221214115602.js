@@ -28,8 +28,7 @@ db.connect(DB_HOST);
  */
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
-  context: () => ({ models })
+  resolvers
 });
 
 /**
