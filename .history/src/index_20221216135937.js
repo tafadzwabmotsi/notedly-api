@@ -66,9 +66,7 @@ const { url } = await startStandaloneServer(server, {
      */
     const user = getUser(token);
 
-    if (host === 'localhost:4000') console.log(user);
-
-    return { models, user };
+    if (host === 'localhost:4000') return { models, user };
   }
 });
 

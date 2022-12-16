@@ -10,9 +10,7 @@ export const db = {
     mongoose.connect(
       DB_HOST,
       { useNewUrlParser: true },
-      { useFindAndModify: false },
-      { useCreateIndex: true },
-      { useUnifiedTopology: true }
+      { useFindAndModify: false }
     );
 
     /**

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 export const db = {
   connect: DB_HOST => {
     mongoose.set('strictQuery', true);
+    mongoose.set('useUnifiedTopology', true);
 
     /**
      * Connect to the DB
@@ -11,8 +12,7 @@ export const db = {
       DB_HOST,
       { useNewUrlParser: true },
       { useFindAndModify: false },
-      { useCreateIndex: true },
-      { useUnifiedTopology: true }
+      { useCreateIndex: true }
     );
 
     /**
