@@ -85,26 +85,7 @@ export const Mutation = {
   /**
    * Update a note with the given id
    */
-  updateNote: async (parent, { content, id }, { models: { Note }, user }) => {
-    /**
-     * If not a user, throw an Authentication error
-     */
-    if (!user) {
-      throw signInError;
-    }
-
-    /**
-     * Find the note
-     */
-    const note = await Note.findById(id);
-
-    /**
-     * If the note and current user don't match, throw a forbidden error
-     */
-    if (note && String(note.author) !== user.id) {
-      throw forbiddenError;
-    }
-
+  updateNote: async (parent, { content, id }, { models: { Note } }) => {
     return await Note.findOneAndUpdate(
       { _id: id },
       { $set: { content } },

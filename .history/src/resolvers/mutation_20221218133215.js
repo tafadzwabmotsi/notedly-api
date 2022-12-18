@@ -7,17 +7,11 @@ import mongoose from 'mongoose';
 /***
  * Errors
  */
-const signInError = new GraphQLError('You must be signed in to create a note', {
-  extensions: {
-    code: 'UNAUTHENTICATED'
-  }
-});
-
-const forbiddenError = new GraphQLError(
-  `You don't have permissions to delete the note`,
+const mustSignInError = new GraphQLError(
+  'You must be signed in to create a note',
   {
     extensions: {
-      code: 'FORBIDDEN'
+      code: 'UNAUTHENTICATED'
     }
   }
 );
@@ -31,7 +25,7 @@ export const Mutation = {
      * If there is no user on the context, throw an authentication error
      */
     if (!user) {
-      throw signInError;
+      throw mustSignInError;
     }
 
     return await Note.create({
@@ -47,37 +41,11 @@ export const Mutation = {
   /**
    * Delete a note with the given id
    */
-  deleteNote: async (parent, { id }, { models: { Note }, user }) => {
-    /**
-     * If not a user, throw an Authentication error
-     */
-    if (!user) {
-      throw signInError;
-    }
-
-    /**
-     * Find the note
-     */
-    const note = await Note.findById(id);
-
-    /**
-     * If the note owner and current user don't match,
-     * throw a ForbiddenError
-     */
-    if (note && String(note.author) !== user.id) {
-      throw forbiddenError;
-    }
-
+  deleteNote: async (parent, { id }, { models: { Note } }) => {
     try {
-      /**
-       * Everything checks out, remove the note
-       */
-      await note.remove();
+      await Note.findOneAndRemove({ _id: id });
       return true;
     } catch (err) {
-      /**
-       * If there's an error along the way, return false
-       */
       return false;
     }
   },
@@ -85,26 +53,7 @@ export const Mutation = {
   /**
    * Update a note with the given id
    */
-  updateNote: async (parent, { content, id }, { models: { Note }, user }) => {
-    /**
-     * If not a user, throw an Authentication error
-     */
-    if (!user) {
-      throw signInError;
-    }
-
-    /**
-     * Find the note
-     */
-    const note = await Note.findById(id);
-
-    /**
-     * If the note and current user don't match, throw a forbidden error
-     */
-    if (note && String(note.author) !== user.id) {
-      throw forbiddenError;
-    }
-
+  updateNote: async (parent, { content, id }, { models: { Note } }) => {
     return await Note.findOneAndUpdate(
       { _id: id },
       { $set: { content } },
