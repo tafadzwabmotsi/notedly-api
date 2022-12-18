@@ -8,25 +8,10 @@ export const Mutation = {
   /**
    * Create a new note
    */
-  newNote: async (parent, args, { models: { Note }, user }) => {
-    /**
-     * If there is no user on the context, throw an authentication error
-     */
-    if (!user) {
-      throw new GraphQLError('You must be signed in to create a note', {
-        extensions: {
-          code: 'UNAUTHENTICATED'
-        }
-      });
-    }
-
+  newNote: async (parent, args, { models: { Note } }) => {
     return await Note.create({
       content: args.content,
-
-      /**
-       * Reference the author's mongo id
-       */
-      author: mongoose.Types.ObjectId(user.id)
+      author: `Adam Scott`
     });
   },
 
