@@ -18,19 +18,5 @@ export const Query = {
    */
   user: async (parent, { username }, { models: { User } }) => {
     return await User.findOne({ username });
-  },
-
-  /**
-   * Query all users
-   */
-  users: async (parent, args, { models: { User } }) => {
-    return await User.find({});
-  },
-
-  /**
-   * Query a user given the current context
-   */
-  me: async (parent, args, { models: { User }, user: { id } }) => {
-    return await User.findById(id);
   }
 };
