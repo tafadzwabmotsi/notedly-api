@@ -231,45 +231,20 @@ export const Mutation = {
      * and reduce the favoriteCount by 1
      */
     if (hasUser >= 0) {
-      return await Note.findByIdAndUpdate(
-        id,
-        {
-          $pull: {
-            favoritedBy: mongoose.Types.ObjectId(user.id)
-          },
-          $inc: {
-            favoriteCount: -1
-          }
+      return await Note.findByIdAndUpdate(id, {
+        $pull: {
+          favoritedBy: mongoose.Types.ObjectId(user.id)
+        },
+        $inc: {
+          favoriteCount: -1
         },
         {
           /**
            * Set new to true to return the updated doc
-           */
-          new: true
+          */
+         new: true
         }
-      );
-    } else {
-      /**
-       * If the user doesn't exist in the list add them to
-       * the list and increment the favoriteCount by 1
-       */
-      return await Note.findByIdAndUpdate(
-        id,
-        {
-          $push: {
-            favoritedBy: mongoose.Types.ObjectId(user.id)
-          },
-          $inc: {
-            favoriteCount: 1
-          }
-        },
-        {
-          /**
-           * Set new to true to return the updated doc
-           */
-          new: true
-        }
-      );
+      });
     }
   }
 };

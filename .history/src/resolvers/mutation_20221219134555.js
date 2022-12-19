@@ -208,68 +208,9 @@ export const Mutation = {
   /**
    * Toggle a favorite note
    */
-  toggleFavorite: async (parent, { id }, { models: { Note }, user }) => {
+  toggleFavorite: async (parent, { id }, { models, user }) => {
     /**
      * If no user context is passed, throw auth error
      */
-    if (!user) {
-      throw new GraphQLError(`Error found in toggling favorite`, {
-        extensions: {
-          code: 'UNAUTHENTICATED'
-        }
-      });
-    }
-
-    /**
-     * Check to see if the user has already favorited the note
-     */
-    let noteCheck = await Note.findById(id);
-    const hasUser = noteCheck.favoritedBy.indexOf(user.id);
-
-    /**
-     * If the user exists in the list, pull them from the list
-     * and reduce the favoriteCount by 1
-     */
-    if (hasUser >= 0) {
-      return await Note.findByIdAndUpdate(
-        id,
-        {
-          $pull: {
-            favoritedBy: mongoose.Types.ObjectId(user.id)
-          },
-          $inc: {
-            favoriteCount: -1
-          }
-        },
-        {
-          /**
-           * Set new to true to return the updated doc
-           */
-          new: true
-        }
-      );
-    } else {
-      /**
-       * If the user doesn't exist in the list add them to
-       * the list and increment the favoriteCount by 1
-       */
-      return await Note.findByIdAndUpdate(
-        id,
-        {
-          $push: {
-            favoritedBy: mongoose.Types.ObjectId(user.id)
-          },
-          $inc: {
-            favoriteCount: 1
-          }
-        },
-        {
-          /**
-           * Set new to true to return the updated doc
-           */
-          new: true
-        }
-      );
-    }
   }
 };
