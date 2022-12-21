@@ -9,7 +9,5 @@ const { GraphQLDateTime } = graphqlISODate;
 export const resolvers = {
   Query,
   Mutation,
-  Note,
-  User,
   DateTime: GraphQLDateTime
 };
